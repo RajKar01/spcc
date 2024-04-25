@@ -1,0 +1,90 @@
+Theory :   
+Macro with One Argument: 
+A macro with one argument is a reusable block of code that takes a single parameter or argument. The argument can be used within the macro to customize its behavior or to operate on different values.  
+Expanding Macro Calls: 
+When a macro call with an argument is encountered in the source code, it needs to be expanded by replacing the macro call with the sequence of instructions defined in the macro. The argument provided in the macro call is substituted into the macro's definition at the appropriate places.  
+Generating Expanded Source Code: 
+After expanding macro calls, the expanded source code is generated. It contains all the instructions from the original source code along with the macro expansions. This expanded source code serves as the input for further processing, such as assembling or compiling.  
+
+
+
+macrol_input = []
+codel_input = []
+
+print("Enter macro instructions (type 'END' to finish):")
+while True:
+    line = input().strip().upper()
+    if line == 'END':
+        break
+    macrol_input.append(line)
+
+print("\nEnter code instructions (type 'END' to finish):")
+while True:
+    line = input().strip()
+    if line == 'END':
+        break
+    codel_input.append(line)
+
+macroname_index = macrol_input.index('MACRO')
+macroname = macrol_input[macroname_index + 1].split()[0]
+macrol = macrol_input[macroname_index + 2:macrol_input.index('MEND')]
+
+def callMacro(arg, macrol):
+    temp = []
+    for i in macrol:
+        a = i.split()
+        a[1:] = arg.split(',')
+        temp.append(' '.join(a))
+    return temp
+
+codelen = len(codel_input)
+i = 0
+macrocount = 0
+argl = []
+
+while i < len(codel_input):
+    a = codel_input[i].split()
+    if a[0].upper() == macroname:
+        # Replace only the current line with macro call
+        codel_input[i:i + 1] = callMacro(a[1], macrol)
+        argl.extend(a[1].split(','))
+        macrocount += 1
+        i += 1
+    else:
+        i += 1
+
+print("\nEvaluated Program:")
+for i in codel_input:
+    print(i)
+
+print("\nStatistical Output")
+print("Number of instructions in input source code (excluding Macro calls) =", codelen - macrocount)
+print("Number of Macro calls =", macrocount)
+print("Number of instructions defined in the Macro call =", len(macrol))
+for i, data in enumerate(argl):
+    print(f"Actual argument during Macro call {i + 1} =", data)
+print("Total number of instructions in the expanded source code =", len(codel_input))
+
+
+
+Instruction:
+
+Enter macro instructions (type 'END' to finish):
+MACRO
+RAHUL &ARG
+ADD &ARG
+SUB &ARG
+OR &ARG
+MEND
+END
+
+Enter code instructions (type 'END' to finish):
+MOV R
+RAHUL 30
+DCR R
+AND R
+RAHUL 55
+MUL 88
+HALT
+END
+

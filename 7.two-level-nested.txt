@@ -1,0 +1,116 @@
+theory:
+Macros in Programming Languages:
+
+Macros are preprocessor directives or facilities provided by programming languages that allow developers to define reusable code snippets.
+They enable abstraction, code reuse, and the creation of more expressive and concise code.
+
+2. Nested Macros:
+
+Nested macros refer to macros defined within other macros.
+This allows for the creation of more complex and hierarchical code structures.
+
+3. 2-Level Nested Macros:
+
+In 2-level nested macros, there are macros within macros, i.e., macros that are defined inside other macros.
+This enables the creation of deeply nested code structures and facilitates code organization and abstraction.
+
+4. Syntax for 2-Level Nested Macros:
+
+The syntax for defining 2-level nested macros depends on the programming language being used.
+Typically, the inner macro definitions are enclosed within the outer macro definition.
+For example, in C/C++, the syntax might look like:
+
+#define OUTER_MACRO(arg1, arg2) \
+   do { \
+       /* Outer macro instructions */ \
+       INNER_MACRO(arg1); \
+       /* More outer macro instructions */ \
+   } while(0) \
+   
+#define INNER_MACRO(arg) \
+   do { \
+       /* Inner macro instructions */ \
+   } while(0)
+
+5. Expansion of Nested Macros:
+
+When a nested macro is invoked, the preprocessor expands the outer macro first, then proceeds to expand the inner macro.
+The expansion process continues recursively until all nested macros are expanded.
+
+6. Practical Implementation:
+
+Implementing 2-level nested macros involves defining macros within macros in the source code.
+The nested macros are then invoked within the code, and their expansion is observed.
+
+
+
+7. Considerations and Limitations:
+
+While nested macros provide flexibility and code organization benefits, excessive nesting can lead to code complexity and reduced readability.
+Care should be taken to ensure that nested macros are used judiciously and are well-documented.
+
+
+
+code :
+
+def expand_second_level_macro(instruction): 
+    # Second level macro expansion 
+    if instruction.startswith("TILAK"): 
+        arg = instruction.split()[1] 
+        return ["ADD " + arg, "MUL " + arg] 
+    else: 
+        return [instruction] 
+def expand_first_level_macro(input_source, first_level_macro_definition): 
+    # First level macro expansion 
+    expanded_source_code = [] 
+    macro_calls_count = 0 
+    macro_instructions_count = 0 
+    for line in input_source.split('\n'): 
+        if line.strip().startswith("RAHUL"): 
+            macro_calls_count += 1 
+            macro_instructions = first_level_macro_definition.split('\n')[1:-1] 
+            macro_instructions_count += len(macro_instructions) 
+            for macro_instruction in macro_instructions: 
+                expanded_source_code.extend(expand_second_level_macro(macro_instruction)) 
+        else: 
+            expanded_source_code.append(line)  
+    return expanded_source_code, macro_calls_count, macro_instructions_count 
+# Input source code with First level macro calls 
+input_source_code = """MOV R 
+AND R 
+RAHUL 
+MUL 88 
+HALT""" 
+# First level macro definition "RAHUL" 
+first_level_macro_definition = """MACRO 
+RAHUL 
+SUB R 
+TILAK 77 
+MUL R 
+TILAK 99 
+MEND""" 
+# Second level macro definition "TILAK" 
+second_level_macro_definition = """MACRO 
+TILAK &ARG 
+ADD &ARG 
+MUL &ARG 
+MEND""" 
+# Expand first level macro 
+expanded_source_code, macro_calls_count, macro_instructions_count = expand_first_level_macro(input_source_code, first_level_macro_definition) 
+# Expand second level macro 
+final_expanded_source_code = [] 
+for instruction in expanded_source_code: 
+    final_expanded_source_code.extend(expand_second_level_macro(instruction)) 
+# Calculate statistics 
+total_instructions = len(input_source_code.split('\n')) - macro_calls_count + macro_instructions_count 
+# Output final expanded source code 
+print("Final Expanded source code (after second level macro expansion):") 
+for instruction in final_expanded_source_code: 
+    print(instruction) 
+# Output statistics 
+print("\nStatistical output:") 
+print("Number of instructions in input source code (excluding Macro calls) =", len(input_source_code.split('\n')) - macro_calls_count) 
+print("Number of Macro calls at first level =", macro_calls_count) 
+print("Number of instructions & other macro calls defined in the first level Macro call =", macro_instructions_count) 
+print("Total number of instructions in the final expanded source code =", total_instructions)  
+

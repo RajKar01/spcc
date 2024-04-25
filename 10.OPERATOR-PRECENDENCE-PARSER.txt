@@ -1,0 +1,93 @@
+Theory:
+Operator Grammar:
+An operator grammar is a type of grammar used to define mathematical operators. It follows the restriction that no production has either an empty right-hand side (null productions) or two adjacent non-terminals in its right-hand side.
+
+Example:
+Consider the grammar:
+E -> E + E / E * E / id
+It is an operator grammar.
+
+Operator Precedence Parser:
+An operator precedence parser is a bottom-up parser interpreting an operator grammar. It relies on precedence relations between terminals.
+
+Precedence Relations:
+
+?: "yields precedence to"
+?: "has same precedence as"
+?: "takes precedence over"
+Methods for Determining Precedence Relations:
+
+Conventional associativity and precedence of operators.
+Constructing an unambiguous grammar that reflects correct associativity and precedence in parse trees.
+Parsing Table Implementation:
+Operator precedence parsers use precedence functions that map terminal symbols to integers, implementing precedence relations by numerical comparison.
+
+Advantages:
+
+Easy to construct by hand.
+Simple to implement.
+Disadvantages:
+
+Hard to handle tokens with multiple precedence levels.
+Applicable only to a small class of grammars.
+
+Implementation in Java:
+
+
+CODE :
+
+import java.util.Scanner;
+
+public class OperatorPrecedenceParser {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of productions: ");
+        int n = scanner.nextInt();
+        String[] grammars = new String[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter production " + (i + 1) + ": ");
+            grammars[i] = scanner.next();
+        }
+
+        boolean isOperatorGrammar = checkOperatorGrammar(grammars);
+
+        if (isOperatorGrammar) {
+            System.out.println("Operator grammar");
+        } else {
+            System.out.println("Not operator grammar");
+        }
+
+        scanner.close();
+    }
+
+    private static boolean checkOperatorGrammar(String[] grammars) {
+        for (String grammar : grammars) {
+            boolean operatorFound = false;
+            for (int j = 2; j < grammar.length(); j++) {
+                char c = grammar.charAt(j);
+                if (c == '+' || c == '-' || c == '*' || c == '/') {
+                    operatorFound = true;
+                    break;
+                }
+            }
+            if (!operatorFound) {
+                return false; // If no operator found in a production, it's not an operator grammar
+            }
+        }
+        return true; // If all productions contain operators, it's an operator grammar
+    }
+}
+
+
+INSTRUCTION :
+
+Enter the number of productions: 3
+Enter production 1: A=A*A
+Enter production 2: B=AA
+Enter production 3: A=$
+Not operator grammar
+
+Enter the number of productions: 2
+Enter production 1: A=A/A
+Enter production 2: B=A+A
+Operator grammar

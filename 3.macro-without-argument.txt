@@ -1,0 +1,96 @@
+Theory :   
+Macro: 
+A macro is a named sequence of instructions in a programming language, which can be invoked by name. Macros are used to simplify repetitive tasks or to abstract complex operations into single, reusable blocks of code. Macros can have arguments or be parameterless.  
+• Defining a Macro without Argument: 
+A macro without arguments is a simple macro that does not require any input parameters. It serves as a reusable block of code that can be invoked wherever needed in the program without the need for passing arguments.  
+• Expanding Macro Calls: 
+When a macro call is encountered in the source code, it needs to be expanded, i.e., replaced with the sequence of instructions defined in the macro. This expansion may involve replacing the macro call with the entire block of instructions defined in the macro.  
+• Generating Expanded Source Code: 
+After expanding macro calls, the expanded source code is generated, which includes all the instructions from the original source code along with the macro expansions. This expanded source code is what the assembler processes to generate machine code.       
+• Procedure:  
+? Define the macro without arguments. ? Write the source code containing macro calls. ? Implement the macro expansion logic in the assembler. ? Execute the assembler to process the source code and generate the expanded source code. ? Verify the correctness of the expanded source code. ? Record the generated expanded source code in the practical file. 
+
+
+
+print("Enter the macro instructions. Type 'END' on a new line to finish.")
+macrol = []
+while True:
+    line = input().strip().upper()
+    if line == 'END':
+        break
+    macrol.append(line)
+
+print("\nEnter the code instructions. Type 'END' on a new line to finish.")
+codel = []
+while True:
+    line = input().strip()
+    if line == 'END':
+        break
+    codel.append(line)
+
+argl = []
+macrocount = 0
+
+macroname_index = macrol.index('MACRO')
+macroname = macrol[macroname_index + 1].split()[0]
+macrol = macrol[macroname_index + 2:macrol.index('MEND')]
+
+def callMacro(arg, macrol):
+    temp = []
+    for i in macrol:
+        a = i.split()
+        a[1:] = arg.split(',')
+        temp.append(' '.join(a))
+    return temp
+
+codelen = len(codel)
+
+i = 0
+while i < len(codel):
+    a = codel[i].split()
+    if a[0].upper() == macroname:
+        # Replace only the current line with macro call
+        codel[i:i + 1] = callMacro(a[1], macrol)
+        argl.extend(a[1].split(','))
+        macrocount += 1
+        i += 1
+    else:
+        i += 1
+
+print("\nEvaluated Program:")
+for i in codel:
+    print(i)
+
+print("\nStatistical Output")
+print("Number of instructions in input source code (excluding Macro calls) =", codelen - macrocount)
+print("Number of Macro calls =", macrocount)
+print("Number of instructions defined in the Macro call =", len(macrol))
+for i, data in enumerate(argl):
+    print(f"Actual argument during Macro call {i + 1} =", data)
+print("Total number of instructions in the expanded source code =", len(codel))
+
+
+
+instruction:
+
+
+Enter the macro instructions. Type 'END' on a new line to finish.
+MACRO
+RAHUL &ARG1,&ARG2,&ARG3
+ADD &ARG1
+SUB &ARG2
+OR &ARG3
+MEND
+END
+
+Enter the code instructions. Type 'END' on a new line to finish.
+MOV R
+RAHUL 30,40,50
+DCR R
+AND R
+RAHUL 33,44,55
+MUL 88
+HALT
+END
+
+

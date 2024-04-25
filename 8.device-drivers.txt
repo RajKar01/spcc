@@ -1,0 +1,106 @@
+Aim : To Study different types of device drivers.
+Theory :
+Device Driver Basics :
+? Manages & enables functionality of hardware device/peripheral attached
+? Written normally without User Interface (UI)
+? Hardware-dependent and OS specific program
+? Device functionality is normally interrupt driven
+? Needs interrupt processing for asynchronous device interface
+? Handles request made by the kernel concerning a particular type of device
+? Define messages/mechanisms through which the OS and applications can
+access the device
+? Every devices like modem, router, speaker, keyboard, printer etc. require
+device driver to operate
+Device Driver Theory :
+? Each device from the vendor comes with driver CD (or web-link of
+the driver)
+? Driver needs to be installed before that device starts working.
+? Device must be connected to the proper type of I/O port
+? Driver contains the device specific codes required to carry out
+various functions on the device.
+? Device drivers generally work within the kernel layer of the OS.
+? Once installed, driver detects and identifies the peripheral device
+and we become able to control the operation of the device.
+? Driver communicates with the device through the port on system
+bus.
+? OS loads the device drivers and calls the specific functions in the
+driver software in order to execute specific functions on the device.
+Types of Device Drivers :
+1. Kernel device drivers :
+• Consist of some generic drivers loaded along with OS
+• Include drivers for motherboards, processors, and BIOS
+• Invoked and loaded into the System RAM when required (normally upon
+Power-up)
+• When several Kernel drivers are operating at the same time, the machine
+can slow down
+2. User-mode device drivers:
+• Needed when external Plug-and-Play (PnP) device (like Printer) connected
+in the system
+• Such drivers execute in user mode (user triggers driver during a session)
+• In Windows systems, such drivers provide an interface between a Win32
+application and kernel-mode drivers
+• Users can write these drivers to the disk to reduce strain on computer
+resources
+3. Character drivers :
+• Allow the reading/writing of one byte (character) at a time as a stream of
+sequential data
+• Such drivers do not handle input/output (I/O) through the buffer cache
+(more flexible in handling I/O)
+• Character device drivers provide unstructured access to the hardware
+• Developed for Serial operated devices like modems, bus controllers etc.
+4. Block drivers :
+• Block device drivers provide structured access to the hardware (using
+block-sized buffer cache)
+• A buffer cache is a memory pool established by the kernel to store
+frequently accessed blocks via block devices
+• Block device drivers provide block-oriented I/O
+• Developed for USB and various disk drives
+5. Original equipment manufacturer (OEM) drivers:
+• OEMs can create their proprietary device drivers, which need to be
+installed separately after installing the OS.
+6. Virtual device drivers:
+• Virtual device drivers are essential in controlling Virtual Machines (VMs)
+• In virtualization environments: Drivers emulate the hardware of the host
+device
+• Also imitate processor-level occurrences like interrupts and transmit them
+to VM
+7. BIOS:
+• BIOS is the most fundamental driver on a computer.
+• Located in ROM chip (to ensures that BIOS will be available even when
+the hard disk is formatted)
+• Responsible for booting a computer & also performs power-on self-tests
+(POST)
+• BIOS also provides drivers for the basic hardware, such as keyboards and
+monitors
+8. Motherboard drivers :
+• Motherboard drivers are specific for the chipset model, such as B460 for
+Intel computers
+• To realise the motherboard’s full potential users may need to install
+additional drivers
+• Exist within OS
+• Some motherboards have drivers that support video and audio
+9. Open-source drivers:
+• Released under a free and open-source license.
+• Source code for open-source drivers is available to everyone, making
+software collaborations easier
+• They are more trustworthy as people can check them for any malicious
+code
+• Open-source drivers last longer as more people continue to make
+improvements, thus ensuring that even when the company stops
+distributing them, a copy remains
+Device Driver example (Printer Driver) :
+• Printer device driver is installed from CD or from web
+• Printer connected to the computer through printer port
+• A device object for printer is created on the computer & is used to control printer
+operation
+• This device object for printer represents the printer and allows the OS to control its
+functions.
+• Once PRINT command given by user, then this command goes to the device driver
+through the kernel of the operating system
+• Traps Kernel by making particular system call as per interrupt assigned
+• Selects driver for the printer within the kernel
+• Invokes a routine in the device driver as per command
+• Driver issues corresponding commands to the printer through the Host Bus Adapter
+• Commands are interpreted & executed by the microcontrollers within the printer
+• Printer microcontroller control the electro-mechanical components of the printer to
+start printing the document
